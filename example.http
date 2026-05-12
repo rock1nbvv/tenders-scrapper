@@ -4,7 +4,7 @@ GET https://prozorro.gov.ua/api/tenders/UA-2025-08-06-001549-a/summary
 Accept: application/json
 
 > {%
-    // Capture the internal 32-character ID (UUID)
+    // Save the internal UUID
     client.global.set("internal_id", response.body.id);
     client.log("Resolved UUID: " + client.global.get("internal_id"));
 %}
@@ -16,12 +16,12 @@ Accept: application/json
 > {%
     const data = response.body.data;
 
-    // Find the active award (the winner)
+    // Find the active award
     const award = data.awards ? data.awards.find(a => a.status === 'active') : null;
 
     if (award) {
         const supplier = award.suppliers[0];
-        client.log("--- TENDER DETAILS ---");
+        client.log("TENDER DETAILS");
         client.log("Tender ID:    " + data.tenderID);
         client.log("Award ID:     " + award.id);
         client.log("Amount:       " + award.value.amount + " " + award.value.currency);

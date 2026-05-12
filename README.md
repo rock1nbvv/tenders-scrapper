@@ -11,9 +11,9 @@ An input file named `tenders.csv` in the root directory (one link per line) is t
 
 All results are automatically saved into the `results/` folder:
 
-* tender_details.csv: A list of details on every tender - tender id, award id, (amount)winning price, currency,
+* `tender_details.csv`: A list of details on every tender - tender id, award id, amount(winning price), currency,
   supplier(winner) name, supplier edrpou, contact name, contact email.
-* unique_suppliers.csv: A cleaned list containing unique winning companies and their contact persons and emails.
+* `unique_suppliers.csv`: A cleaned list containing unique winning companies and their contact persons and emails.
 
 ## Note
 
