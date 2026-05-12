@@ -1,0 +1,35 @@
+### 1. Get Tender UUID from Summary
+# Use the human-readable UA-ID here and extract internal UUID
+GET https://prozorro.gov.ua/api/tenders/UA-2025-08-06-001549-a/summary
+Accept: application/json
+
+> {%
+    // Capture the internal 32-character ID (UUID)
+    client.global.set("internal_id", response.body.id);
+    client.log("Resolved UUID: " + client.global.get("internal_id"));
+%}
+
+### 2. Fetch Detailed Winner Info
+GET https://public-api.prozorro.gov.ua/api/2.5/tenders/{{internal_id}}
+Accept: application/json
+
+> {%
+    const data = response.body.data;
+
+    // Find the active award (the winner)
+    const award = data.awards ? data.awards.find(a => a.status === 'active') : null;
+
+    if (award) {
+        const supplier = award.suppliers[0];
+        client.log("--- TENDER DETAILS ---");
+        client.log("Tender ID:    " + data.tenderID);
+        client.log("Award ID:     " + award.id);
+        client.log("Amount:       " + award.value.amount + " " + award.value.currency);
+        client.log("Supplier:     " + supplier.name);
+        client.log("EDRPOU:       " + supplier.identifier.id);
+        client.log("Contact Name: " + supplier.contactPoint.name);
+        client.log("Email:        " + supplier.contactPoint.email);
+    } else {
+        client.log("No active awards found for this tender.");
+    }
+%}
