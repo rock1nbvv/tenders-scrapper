@@ -1,6 +1,6 @@
 # Prozorro Tender Scraper
 
-* An input file named tenders.csv in the root directory (one link per line) is the source
+An input file named `tenders.csv` in the root directory (one link per line) is the source
 
 ## Usage
 
